@@ -1,12 +1,12 @@
 class Socket {
   /**
-   * @param {String} url 测试用例：'wss://echo.websocket.org'
-   * @param {Object} config
-   *  - config.reconnectTimeout 断线重连间隔，默认2s
-   *  - config.reconnectLimit 最大重连次数，默认无限制
-   *  - config.pingTimeout 客户端心跳检测间隔，默认15s
-   *  - config.pongTimeout 服务器心跳响应超时时间，默认10s
-   *  - config.heartbeatMsg 心跳消息，建议前后端保持一致
+   * @param {string} url 测试用例：'wss://echo.websocket.org'
+   * @param {object} config 设置对象
+   *  - `reconnectTimeout` 断线重连间隔，默认2s
+   *  - `reconnectLimit` 最大重连次数，默认无限制
+   *  - `pingTimeout` 客户端心跳检测间隔，默认15s
+   *  - `pongTimeout` 服务器心跳响应超时时间，默认10s
+   *  - `heartbeatMsg` 心跳消息，建议前后端保持一致
    */
   constructor(url, config) {
     const defaultConfig = {

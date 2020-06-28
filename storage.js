@@ -1,43 +1,37 @@
-function local(key, val) {
-  if (val === void 0) {
-    let res = localStorage.getItem(key)
+class SmartStorage {
+  constructor(storage) {
+    this.native = storage
+  }
+  /**
+   * @param {string} key
+   */
+  get(key) {
+    let res = this.native.getItem(key)
     try {
       res = JSON.parse(res).value
-    } catch (e) {}
+    } catch {}
     return res
   }
-  typeof val === 'string' || (val = JSON.stringify({ value: val }))
-  localStorage.setItem(key, val)
-}
-
-local.remove = key => {
-  if (Array.isArray(key)) {
-    key.forEach(item => localStorage.removeItem(item))
-  } else {
-    localStorage.removeItem(key)
+  /**
+   * @param {string} key
+   * @param {*} value 
+   */
+  set(key, value) {
+    if (typeof value !== string) value = JSON.stringify({ value })
+    this.native.setItem(key, value)
+  }
+  /**
+   * @param {string | string[]} key
+   */
+  remove(key) {
+    Array.isArray(key)
+      ? key.forEach(item => this.native.removeItem(item))
+      : this.native.removeItem(key)
+  }
+  clear() {
+    this.native.clear()
   }
 }
-local.clear = () => localStorage.clear()
 
-function session(key, val) {
-  if (val === void 0) {
-    let res = sessionStorage.getItem(key)
-    try {
-      res = JSON.parse(res).value
-    } catch (e) {}
-    return res
-  }
-  typeof val === 'string' || (val = JSON.stringify({ value: val }))
-  sessionStorage.setItem(key, val)
-}
-
-session.remove = key => {
-  if (Array.isArray(key)) {
-    key.forEach(item => sessionStorage.removeItem(item))
-  } else {
-    sessionStorage.removeItem(key)
-  }
-}
-session.clear = () => sessionStorage.clear()
-
-export { local, session }
+export const local = new SmartStorage(localStorage)
+export const session = new SmartStorage(sessionStorage)

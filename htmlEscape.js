@@ -1,6 +1,6 @@
 /**
  * html字符串转义
- * @param {String} text
+ * @param {string} text
  */
 export default function htmlEscape(text) {
   return text.replace(/[<>"&]/g, match => {
